@@ -5,7 +5,7 @@ namespace CmdApi.Repository
 {
     public class MockCommanderRepo : ICommanderRepo
     {
-        public IEnumerable<Command> GetAppCommands()
+        public IEnumerable<Command> GetAllCommands()
         {
             return new List<Command>()
             {
