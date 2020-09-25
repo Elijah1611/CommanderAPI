@@ -20,6 +20,7 @@ namespace CmdApi.Controllers
             _mapper = mapper;
         }
 
+
         [HttpGet]
         public ActionResult<IEnumerable<CommandReadDto>> GetAllCommands()
         {
@@ -27,6 +28,7 @@ namespace CmdApi.Controllers
 
             return Ok(_mapper.Map<IEnumerable<CommandReadDto>>(allCommands));
         }
+
 
         [HttpGet("{id}", Name = "GetCommandById")]
         public ActionResult<CommandReadDto> GetCommandById(int id)
@@ -36,6 +38,7 @@ namespace CmdApi.Controllers
             if (command != null) return Ok(_mapper.Map<CommandReadDto>(command));
             else return NotFound();
         }
+
 
         [HttpPost]
         public ActionResult<CommandReadDto> CreateCommand(CommandCreateDto commandCreateDto)
@@ -49,6 +52,23 @@ namespace CmdApi.Controllers
             var commandReadDto = _mapper.Map<CommandReadDto>(commandModel);
 
             return CreatedAtRoute(nameof(GetCommandById), new { Id = commandReadDto.Id }, commandReadDto);
+        }
+
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateCommand(int id, CommandUpdateDto commandUpdateDto)
+        {
+            var commandModel = _repository.GetCommandById(id);
+
+            if (commandModel == null) return NotFound();
+
+            _mapper.Map(commandUpdateDto, commandModel);
+
+            _repository.UpdateCommand(commandModel);
+
+            _repository.SaveChanges();
+
+            return NoContent();
         }
     }
 }
