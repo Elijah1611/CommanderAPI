@@ -5,6 +5,11 @@ namespace CmdApi.Repository
 {
     public class MockCommanderRepo : ICommanderRepo
     {
+        public void CreateCommand(Command cmd)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Command> GetAllCommands()
         {
             return new List<Command>()
@@ -20,5 +25,9 @@ namespace CmdApi.Repository
             return new Command() { Id = 0, Description = "Make virtual environment", Snippet = "python3 -m venv venv", Platform = "Terminal" };
         }
 
+        public bool SaveChanges()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

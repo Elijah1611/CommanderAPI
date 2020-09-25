@@ -15,6 +15,16 @@ namespace CmdApi.Repository
             _context = context;
         }
 
+        public void CreateCommand(Command cmd)
+        {
+            if (cmd == null)
+            {
+                throw new ArgumentNullException(nameof(cmd));
+            }
+
+            _context.Add(cmd);
+        }
+
         public IEnumerable<Command> GetAllCommands()
         {
             return _context.Commands.ToList();
@@ -25,5 +35,9 @@ namespace CmdApi.Repository
             return _context.Commands.FirstOrDefault(p => p.Id == id);
         }
 
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
     }
 }
