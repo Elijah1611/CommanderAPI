@@ -97,5 +97,20 @@ namespace CmdApi.Controllers
 
             return NoContent();
         }
+
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCommand(int id)
+        {
+            var commandModel = _repository.GetCommandById(id);
+
+            if (commandModel == null) return NotFound();
+
+            _repository.DeleteCommand(commandModel);
+
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
